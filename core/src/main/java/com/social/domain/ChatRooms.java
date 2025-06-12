@@ -16,6 +16,9 @@ public class ChatRooms {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "IS_GROUP")
+    private boolean isGroup;
+
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
     private List<ChatParticipants> chatParticipants = new ArrayList<>();
 

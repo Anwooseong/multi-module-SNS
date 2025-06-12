@@ -7,6 +7,13 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"USER_ID", "POST_ID"}
+                )
+        }
+)
 public class Likes {
 
     @Id
