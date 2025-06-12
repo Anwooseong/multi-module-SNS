@@ -5,8 +5,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comments {
