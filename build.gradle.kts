@@ -44,6 +44,9 @@ subprojects {
 		annotationProcessor("org.projectlombok:lombok")
 
 		implementation("org.springframework.boot:spring-boot-starter-validation")
+
+		implementation("org.springdoc:springdoc-openapi-starter-common:2.2.0")
+		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 	}
 
 	tasks.test {
