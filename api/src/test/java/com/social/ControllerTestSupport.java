@@ -39,12 +39,13 @@ public abstract class ControllerTestSupport {
     @MockitoBean
     protected PasswordEncoder passwordEncoder;
 
+
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext){
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
-                .defaultRequest(MockMvcRequestBuilders.multipart("/api/v1/auth/").with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .defaultRequest(MockMvcRequestBuilders.post("/api/v1/auth/signup").with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .build();
     }
 
