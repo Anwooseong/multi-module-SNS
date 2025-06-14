@@ -47,6 +47,10 @@ subprojects {
 
 		implementation("org.springdoc:springdoc-openapi-starter-common:2.2.0")
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+
+		// test
+		testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+		testImplementation("org.springframework.boot:spring-boot-starter-test")
 	}
 
 	tasks.test {
