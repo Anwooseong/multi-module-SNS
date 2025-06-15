@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TokenRequestDTO {
+public class TokenRequest {
 
     private String accessToken;
     private String refreshToken;

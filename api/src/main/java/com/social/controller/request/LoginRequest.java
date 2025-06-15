@@ -1,6 +1,7 @@
 package com.social.controller.request;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,7 +9,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequestDTO {
+@Builder
+public class LoginRequest {
 
     private String email;
     private String password;
@@ -17,3 +19,4 @@ public class UserRequestDTO {
         return new UsernamePasswordAuthenticationToken(email, password);
     }
 }
+
