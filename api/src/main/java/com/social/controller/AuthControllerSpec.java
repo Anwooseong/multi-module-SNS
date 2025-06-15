@@ -1,7 +1,7 @@
 package com.social.controller;
 
-import com.social.controller.request.SignupRequestDTO;
-import com.social.controller.response.UserResponseDTO;
+import com.social.controller.request.SignupRequest;
+import com.social.controller.response.SignupResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 public interface AuthControllerSpec {
 
     @Operation(summary = "유저 회원 가입")
-    ResponseEntity<UserResponseDTO> signup(
-            SignupRequestDTO signupRequestDTO
+    ResponseEntity<SignupResponse> signup(
+            SignupRequest signupRequest
     );
 }

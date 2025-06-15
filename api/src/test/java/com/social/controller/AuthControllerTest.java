@@ -1,8 +1,8 @@
 package com.social.controller;
 
 import com.social.ControllerTestSupport;
-import com.social.controller.request.SignupRequestDTO;
-import com.social.controller.response.UserResponseDTO;
+import com.social.controller.request.SignupRequest;
+import com.social.controller.response.SignupResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -24,7 +24,7 @@ class AuthControllerTest extends ControllerTestSupport {
         String email = "test1234@gmail.com";
         String password = "test123@";
         String profileImageUrl = "홍길동.jpg";
-        SignupRequestDTO request = SignupRequestDTO.builder()
+        SignupRequest request = SignupRequest.builder()
                 .username(username)
                 .email(email)
                 .password(password)
@@ -33,7 +33,7 @@ class AuthControllerTest extends ControllerTestSupport {
 
         // when
         BDDMockito.when(authService.signup(ArgumentMatchers.any()))
-                .thenReturn(UserResponseDTO.builder()
+                .thenReturn(SignupResponse.builder()
                         .id(1L)
                         .username(username)
                         .email(email)

@@ -1,8 +1,8 @@
 package com.social.service;
 
 import com.social.IntegrationTestSupport;
-import com.social.controller.request.SignupRequestDTO;
-import com.social.controller.response.UserResponseDTO;
+import com.social.controller.request.SignupRequest;
+import com.social.controller.response.SignupResponse;
 import com.social.domain.Role;
 import com.social.domain.Users;
 import com.social.repository.RefreshTokenRepository;
@@ -38,7 +38,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         String email = "test1234@gmail.com";
         String password = "test123@";
         String profileImageUrl = "홍길동.jpg";
-        SignupRequestDTO dto = SignupRequestDTO.builder()
+        SignupRequest dto = SignupRequest.builder()
                 .username(username)
                 .email(email)
                 .password(password)
@@ -46,7 +46,7 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .build();
 
         // when
-        UserResponseDTO result = authService.signup(dto);
+        SignupResponse result = authService.signup(dto);
         Users findUser = usersRepository.findByEmail(email).get();
 
         // then
@@ -64,7 +64,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         String email = "test1234@gmail.com";
         String password = "test123@";
         String profileImageUrl = "홍길동.jpg";
-        SignupRequestDTO dto = SignupRequestDTO.builder()
+        SignupRequest dto = SignupRequest.builder()
                 .username(username)
                 .email(email)
                 .password(password)

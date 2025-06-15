@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Data
 @NoArgsConstructor
-public class SignupRequestDTO {
+public class SignupRequest {
     @NotNull
     @Schema(type = "String", description = "유저 이름", example = "홍길동", requiredMode = Schema.RequiredMode.REQUIRED)
     private String username;
@@ -25,7 +25,7 @@ public class SignupRequestDTO {
     private String profileImageUrl;
 
     @Builder
-    public SignupRequestDTO(String username, String email, String password, String profileImageUrl) {
+    public SignupRequest(String username, String email, String password, String profileImageUrl) {
         this.username = username;
         this.email = email;
         this.password = password;

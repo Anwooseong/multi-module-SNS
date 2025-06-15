@@ -1,7 +1,7 @@
 package com.social.controller;
 
-import com.social.controller.request.SignupRequestDTO;
-import com.social.controller.response.UserResponseDTO;
+import com.social.controller.request.SignupRequest;
+import com.social.controller.response.SignupResponse;
 import com.social.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +22,10 @@ public class AuthController implements AuthControllerSpec {
 
     @Override
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDTO> signup(
-            @Valid @RequestBody SignupRequestDTO signupRequestDTO
+    public ResponseEntity<SignupResponse> signup(
+            @Valid @RequestBody SignupRequest signupRequest
     ) {
-        return ResponseEntity.ok(authService.signup(signupRequestDTO));
+        return ResponseEntity.ok(authService.signup(signupRequest));
     }
 }
 

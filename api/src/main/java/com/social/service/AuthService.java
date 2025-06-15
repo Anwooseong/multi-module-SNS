@@ -1,9 +1,9 @@
 package com.social.service;
 
-import com.social.controller.request.SignupRequestDTO;
+import com.social.controller.request.SignupRequest;
 import com.social.controller.request.TokenRequestDTO;
 import com.social.controller.request.UserRequestDTO;
-import com.social.controller.response.UserResponseDTO;
+import com.social.controller.response.SignupResponse;
 import com.social.domain.RefreshToken;
 import com.social.domain.Users;
 import com.social.jwt.TokenDTO;
@@ -28,13 +28,13 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public UserResponseDTO signup(SignupRequestDTO signupRequestDTO) {
-        if (usersRepository.existsByEmail(signupRequestDTO.getEmail())) {
+    public SignupResponse signup(SignupRequest signupRequest) {
+        if (usersRepository.existsByEmail(signupRequest.getEmail())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
 
-        Users users = signupRequestDTO.toUsersEntity(passwordEncoder);
-        return UserResponseDTO.of(usersRepository.save(users));
+        Users users = signupRequest.toUsersEntity(passwordEncoder);
+        return SignupResponse.of(usersRepository.save(users));
     }
 
     @Transactional
