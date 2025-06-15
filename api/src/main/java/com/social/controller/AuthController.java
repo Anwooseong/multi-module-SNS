@@ -1,6 +1,8 @@
 package com.social.controller;
 
+import com.social.controller.request.LoginRequest;
 import com.social.controller.request.SignupRequest;
+import com.social.controller.response.LoginResponse;
 import com.social.controller.response.SignupResponse;
 import com.social.service.AuthService;
 import jakarta.validation.Valid;
@@ -26,6 +28,14 @@ public class AuthController implements AuthControllerSpec {
             @Valid @RequestBody SignupRequest signupRequest
     ) {
         return ResponseEntity.ok(authService.signup(signupRequest));
+    }
+
+    @Override
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(
+            @Valid @RequestBody LoginRequest loginRequest
+    ) {
+        return ResponseEntity.ok(authService.login(loginRequest));
     }
 }
 

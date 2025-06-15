@@ -1,6 +1,8 @@
 package com.social.controller;
 
+import com.social.controller.request.LoginRequest;
 import com.social.controller.request.SignupRequest;
+import com.social.controller.response.LoginResponse;
 import com.social.controller.response.SignupResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,5 +14,10 @@ public interface AuthControllerSpec {
     @Operation(summary = "유저 회원 가입")
     ResponseEntity<SignupResponse> signup(
             SignupRequest signupRequest
+    );
+
+    @Operation(summary = "유저 로그인")
+    ResponseEntity<LoginResponse> login(
+            LoginRequest loginRequest
     );
 }
