@@ -46,6 +46,7 @@ public abstract class ControllerTestSupport {
                 .webAppContextSetup(webApplicationContext)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .defaultRequest(MockMvcRequestBuilders.post("/api/v1/auth/signup").with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .defaultRequest(MockMvcRequestBuilders.post("/api/v1/auth/login").with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .build();
     }
 
