@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@ActiveProfiles({"local", "jwt"})
+@ActiveProfiles({"test", "jwt"})
 @WebMvcTest(controllers = {
         AuthController.class
 })

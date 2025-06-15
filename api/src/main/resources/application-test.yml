@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: test
 
   h2:
     console:
@@ -10,14 +10,14 @@ spring:
 
   datasource:
     driver-class-name: org.h2.Driver
-    url: 'jdbc:h2:tcp://localhost:9092/~/sns'
+    url: 'jdbc:h2:tcp://localhost:9092/~/sns-test'
     username: test
     password: test1234
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
 server:
   port: 8080

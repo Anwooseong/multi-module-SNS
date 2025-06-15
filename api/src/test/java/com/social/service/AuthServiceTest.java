@@ -1,10 +1,13 @@
 package com.social.service;
 
 import com.social.IntegrationTestSupport;
+import com.social.controller.request.LoginRequest;
 import com.social.controller.request.SignupRequest;
+import com.social.controller.response.LoginResponse;
 import com.social.controller.response.SignupResponse;
 import com.social.domain.Role;
 import com.social.domain.Users;
+import com.social.jwt.TokenProvider;
 import com.social.repository.RefreshTokenRepository;
 import com.social.repository.UsersRepository;
 import org.assertj.core.api.Assertions;
@@ -23,6 +26,9 @@ class AuthServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private RefreshTokenRepository refreshTokenRepository;
+
+    @Autowired
+    private TokenProvider tokenProvider;
 
     @AfterEach
     void tearDown() {
@@ -86,6 +92,36 @@ class AuthServiceTest extends IntegrationTestSupport {
         Assertions.assertThatThrownBy(() -> authService.signup(dto))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("이미 가입되어 있는 유저입니다");
+    }
+
+    @DisplayName("유저 로그인")
+    @Test
+    void login_success() {
+        // given
+        String username = "홍길동";
+        String email = "test1234@gmail.com";
+        String password = "test123@";
+        String profileImageUrl = "홍길동.jpg";
+        SignupRequest dto = SignupRequest.builder()
+                .username(username)
+                .email(email)
+                .password(password)
+                .profileImageUrl(profileImageUrl)
+                .build();
+        authService.signup(dto);
+
+
+
+        LoginRequest request = LoginRequest.builder()
+                .email(email)
+                .password(password)
+                .build();
+
+        // when
+        LoginResponse result = authService.login(request);
+
+        // then
+        System.out.println(tokenProvider.getAuthentication(result.getAccessToken()).getName());
     }
 
 }
