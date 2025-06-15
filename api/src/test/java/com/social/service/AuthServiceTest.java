@@ -110,8 +110,6 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .build();
         authService.signup(dto);
 
-
-
         LoginRequest request = LoginRequest.builder()
                 .email(email)
                 .password(password)
