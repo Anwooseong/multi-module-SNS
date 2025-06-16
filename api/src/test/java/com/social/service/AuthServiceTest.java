@@ -43,12 +43,10 @@ class AuthServiceTest extends IntegrationTestSupport {
         String username = "홍길동";
         String email = "test1234@gmail.com";
         String password = "test123@";
-        String profileImageUrl = "홍길동.jpg";
         SignupRequest dto = SignupRequest.builder()
                 .username(username)
                 .email(email)
                 .password(password)
-                .profileImageUrl(profileImageUrl)
                 .build();
 
         // when
@@ -58,7 +56,6 @@ class AuthServiceTest extends IntegrationTestSupport {
         // then
         Assertions.assertThat(result.getUsername()).isEqualTo(username);
         Assertions.assertThat(result.getEmail()).isEqualTo(email);
-        Assertions.assertThat(findUser.getUsername()).isEqualTo(username);
         Assertions.assertThat(findUser.getEmail()).isEqualTo(email);
     }
 
@@ -69,19 +66,16 @@ class AuthServiceTest extends IntegrationTestSupport {
         String username = "홍길동";
         String email = "test1234@gmail.com";
         String password = "test123@";
-        String profileImageUrl = "홍길동.jpg";
         SignupRequest dto = SignupRequest.builder()
                 .username(username)
                 .email(email)
                 .password(password)
-                .profileImageUrl(profileImageUrl)
                 .build();
 
         Users user = Users.builder()
                 .username(username)
                 .email(email)
                 .password(password)
-                .profileImageUrl(profileImageUrl)
                 .role(Role.ROLE_USER)
                 .build();
         usersRepository.save(user);
@@ -106,7 +100,6 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .username(username)
                 .email(email)
                 .password(password)
-                .profileImageUrl(profileImageUrl)
                 .build();
         authService.signup(dto);
 

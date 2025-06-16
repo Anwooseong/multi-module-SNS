@@ -26,12 +26,10 @@ class AuthControllerTest extends ControllerTestSupport {
         String username = "홍길동";
         String email = "test1234@gmail.com";
         String password = "test123@";
-        String profileImageUrl = "홍길동.jpg";
         SignupRequest request = SignupRequest.builder()
                 .username(username)
                 .email(email)
                 .password(password)
-                .profileImageUrl(profileImageUrl)
                 .build();
 
         // when

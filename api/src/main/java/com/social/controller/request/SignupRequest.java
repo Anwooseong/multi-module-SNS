@@ -21,15 +21,12 @@ public class SignupRequest {
     @NotNull
     @Schema(type = "String", description = "유저 비밀번호", example = "test1234@", requiredMode = Schema.RequiredMode.REQUIRED)
     private String password;
-    @Schema(type = "String", description = "유저 프로필 사진", example = "홍길동.jpg", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private String profileImageUrl;
 
     @Builder
-    public SignupRequest(String username, String email, String password, String profileImageUrl) {
+    public SignupRequest(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.profileImageUrl = profileImageUrl;
     }
 
     public Users toUsersEntity(PasswordEncoder passwordEncoder) {
@@ -37,7 +34,6 @@ public class SignupRequest {
                 .username(username)
                 .email(email)
                 .password(passwordEncoder.encode(password))
-                .profileImageUrl(profileImageUrl)
                 .role(Role.ROLE_USER)
                 .build();
     }
