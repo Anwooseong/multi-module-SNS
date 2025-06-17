@@ -19,6 +19,6 @@ public class PostsController implements PostsControllerSpec{
 
     @PostMapping
     public ResponseEntity<Long> createBoard(@Valid @RequestBody CreatePostsRequest createPostsRequest) {
-        return ResponseEntity.ok(postsService.createPost(createPostsRequest));
+        return ResponseEntity.ok(postsService.createPost(createPostsRequest).getId());
     }
 }

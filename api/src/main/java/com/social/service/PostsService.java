@@ -25,7 +25,7 @@ public class PostsService {
     private final PhotosRepository photosRepository;
 
     @Transactional
-    public Long createPost(CreatePostsRequest request) {
+    public Posts createPost(CreatePostsRequest request) {
 
         Users user = usersRepository.findById(getCurrentUserId())
                 .orElseThrow(() -> new RuntimeException("유저 ID가 존재하지 않습니다."));
@@ -46,6 +46,6 @@ public class PostsService {
 
         photosRepository.saveAll(photosToEntity);
 
-        return savePost.getId();
+        return savePost;
     }
 }

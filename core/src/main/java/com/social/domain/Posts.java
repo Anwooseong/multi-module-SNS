@@ -28,7 +28,7 @@ public class Posts extends BaseTimeEntity{
     private List<Photos> photos = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Comments> post = new ArrayList<>();
+    private List<Comments> comments = new ArrayList<>();
 
     @Builder
     public Posts(Long id, Users user, String caption) {
