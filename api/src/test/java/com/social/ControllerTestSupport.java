@@ -2,8 +2,12 @@ package com.social;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.social.controller.AuthController;
+import com.social.controller.PostsController;
+import com.social.repository.PhotosRepository;
+import com.social.repository.PostsRepository;
 import com.social.repository.UsersRepository;
 import com.social.service.AuthService;
+import com.social.service.PostsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,7 +23,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 @ActiveProfiles({"test", "secret"})
 @WebMvcTest(controllers = {
-        AuthController.class
+        AuthController.class,
+        PostsController.class
 })
 public abstract class ControllerTestSupport {
 
@@ -29,12 +34,21 @@ public abstract class ControllerTestSupport {
     @Autowired
     protected ObjectMapper objectMapper;
 
-
     @MockitoBean
     protected AuthService authService;
 
     @MockitoBean
     protected UsersRepository usersRepository;
+
+    @MockitoBean
+    protected PostsService postsService;
+
+    @MockitoBean
+    protected PostsRepository postsRepository;
+
+    @MockitoBean
+    protected PhotosRepository photosRepository;
+
 
     @MockitoBean
     protected PasswordEncoder passwordEncoder;
@@ -47,6 +61,7 @@ public abstract class ControllerTestSupport {
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .defaultRequest(MockMvcRequestBuilders.post("/api/v1/auth/signup").with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .defaultRequest(MockMvcRequestBuilders.post("/api/v1/auth/login").with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .defaultRequest(MockMvcRequestBuilders.post("/api/v1/posts").with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .build();
     }
 

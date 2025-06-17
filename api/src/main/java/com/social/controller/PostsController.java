@@ -1,6 +1,7 @@
 package com.social.controller;
 
 import com.social.controller.request.CreatePostsRequest;
+import com.social.controller.response.CreatePostsResponse;
 import com.social.service.PostsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class PostsController implements PostsControllerSpec{
     private final PostsService postsService;
 
     @PostMapping
-    public ResponseEntity<Long> createBoard(@Valid @RequestBody CreatePostsRequest createPostsRequest) {
-        return ResponseEntity.ok(postsService.createPost(createPostsRequest).getId());
+    public ResponseEntity<CreatePostsResponse> createBoard(@Valid @RequestBody CreatePostsRequest createPostsRequest) {
+        return ResponseEntity.ok(CreatePostsResponse.of(postsService.createPost(createPostsRequest)));
     }
 }

@@ -1,6 +1,7 @@
 package com.social.controller;
 
 import com.social.controller.request.CreatePostsRequest;
+import com.social.controller.response.CreatePostsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,6 @@ import org.springframework.http.ResponseEntity;
 public interface PostsControllerSpec {
 
     @Operation(summary = "게시글 등록")
-    ResponseEntity<Long> createBoard(CreatePostsRequest createPostsRequest);
+    ResponseEntity<CreatePostsResponse> createBoard(CreatePostsRequest createPostsRequest);
 
 }
