@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-public class RefreshToken {
+public class RefreshToken extends BaseTimeEntity{
 
     @Id
     @Column(name = "rt_key")
