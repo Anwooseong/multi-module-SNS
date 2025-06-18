@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @EnableMongoRepositories(
-        basePackages = "com.social",
+        basePackages = "com.social.domain.notification",
         mongoTemplateRef = MongoTemplateConfig.MONGO_TEMPLATE
 )
 public class MongoTemplateConfig {
