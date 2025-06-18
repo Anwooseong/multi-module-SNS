@@ -9,13 +9,13 @@ spring:
       path: /h2-console
 
   datasource:
-    driver-class-name: org.h2.Driver
-    url: 'jdbc:h2:tcp://localhost:9092/~/sns-test'
-    username: test
-    password: test1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: 'jdbc:mysql://localhost:3306/snsTest'
+    username: testUser
+    password: testUser1234@
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: create
 
