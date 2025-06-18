@@ -10,6 +10,8 @@ java {
 	}
 }
 
+ext["springCloudVersion"] = "2023.0.0"
+
 allprojects {
 	group = "com.social"
 	version = "0.0.1-SNAPSHOT"
@@ -40,7 +42,7 @@ subprojects {
 		implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 		implementation("org.springframework.boot:spring-boot-starter-web")
 		compileOnly("org.projectlombok:lombok")
-		runtimeOnly("com.h2database:h2")
+		runtimeOnly("com.mysql:mysql-connector-j:8.2.0")
 		annotationProcessor("org.projectlombok:lombok")
 
 		implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -51,6 +53,12 @@ subprojects {
 		// test
 		testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 		testImplementation("org.springframework.boot:spring-boot-starter-test")
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+		}
 	}
 
 	tasks.test {
