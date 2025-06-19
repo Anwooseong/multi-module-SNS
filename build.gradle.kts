@@ -64,4 +64,9 @@ subprojects {
 	tasks.test {
 		useJUnitPlatform()
 	}
+
+	tasks.compileJava{
+		options.compilerArgs.add("-parameters")
+	}
+
 }

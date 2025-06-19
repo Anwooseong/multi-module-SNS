@@ -18,4 +18,6 @@ dependencies {
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
 
 
+    implementation("org.springframework.kafka:spring-kafka")
+
 }

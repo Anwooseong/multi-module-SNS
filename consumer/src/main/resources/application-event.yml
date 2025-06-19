@@ -4,7 +4,7 @@ spring:
       definition: comment; like; follow;
     stream:
       binder:
-        brokers: localhost:8083
+        brokers: localhost:9092
       bindings:
         comment-in-0:
           destination: comment
@@ -24,3 +24,9 @@ spring:
           group: notification-consumer
           consumer:
             max-attempts: 2
+  kafka:
+    consumer:
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        # JsonDeserializer에게 역직렬화할 대상 타입을 명시
+        spring.json.value.default.type: com.social.event.LikeEvent
