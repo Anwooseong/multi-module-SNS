@@ -21,10 +21,7 @@ public class LikeEventConsumer {
 
     @Bean(name = "like")
     public Consumer<LikeEvent> like() {  //application-event.yml 에 등록된 function definition 에 따라서 함수명 설정
-        log.info("Kafka LikeEvent consumer like");
         return event -> {
-            log.info("Kafka LikeEvent consumer like: {}", event);
-
             if (event.getType() == LikeEventType.ADD) {
                 likeAddTask.processEvent(event);
             } else if (event.getType() == LikeEventType.REMOVE) {
