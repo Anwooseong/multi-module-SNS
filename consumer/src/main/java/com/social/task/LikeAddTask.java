@@ -1,11 +1,11 @@
 package com.social.task;
 
-import com.social.client.PostClient;
+import com.social.domain.Posts;
 import com.social.event.LikeEvent;
 import com.social.notification.domain.LikeNotification;
 import com.social.notification.domain.Notification;
 import com.social.notification.domain.NotificationType;
-import com.social.notification.domain.Post;
+import com.social.repository.PostsRepository;
 import com.social.service.NotificationGetService;
 import com.social.service.NotificationSaveService;
 import com.social.utils.NotificationIdGenerator;
@@ -24,20 +24,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LikeAddTask {
 
-    private final PostClient postClient;
+    private final PostsRepository postsRepository;
     private final NotificationGetService notificationGetService;
     private final NotificationSaveService notificationSaveService;
 
     public void processEvent(LikeEvent event) {
         // 자신의 게시글인 경우 무시
-        Post post = postClient.getPost(event.getPostId());
-        if (post == null) {
-            log.info("Post is null with postId:{}", event.getPostId());
-            return;
-        }
+        Posts post = postsRepository.findWithUserById(event.getPostId())
+                .orElseThrow(() -> new RuntimeException("Post is null with postId:"+ event.getPostId()));
 
         if (Objects.equals(post.getId(), event.getUserId())) {
-            log.info("자기 게시글 좋아요 추가");
+            log.info("자기 게시글 좋아요 추가는 인한 알림은 등록 X");
             return;
         }
 
@@ -45,7 +42,7 @@ public class LikeAddTask {
         notificationSaveService.upsert(notification);
     }
 
-    private Notification createOrUpdateNotification(LikeEvent event, Post post) {
+    private Notification createOrUpdateNotification(LikeEvent event, Posts post) {
         Optional<Notification> optionalNotification = notificationGetService.getNotificationByTypeAndPostId(NotificationType.LIKE, post.getId());
 
         Instant now = Instant.now();
@@ -65,10 +62,10 @@ public class LikeAddTask {
         return notification;
     }
 
-    private Notification createNotification(LikeEvent event, Post post, Instant now, Instant retention) {
+    private Notification createNotification(LikeEvent event, Posts post, Instant now, Instant retention) {
         return new LikeNotification(
                 NotificationIdGenerator.generate(),
-                post.getUserId(),
+                post.getUser().getId(),
                 NotificationType.LIKE,
                 event.getCreatedAt(),
                 now,

@@ -11,4 +11,7 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
 
     @Query("SELECT p FROM Posts p JOIN FETCH p.photos ph WHERE p.id = :postId ORDER BY ph.sortOrder ASC")
     Optional<Posts> findWithPhotosByIdOrderBySortOrderAsc(@Param("postId") Long postId);
+
+    @Query("SELECT p FROM Posts p JOIN FETCH p.user")
+    Optional<Posts> findWithUserById(Long id);
 }
