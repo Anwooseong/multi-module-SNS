@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(
         uniqueConstraints = {
                 @UniqueConstraint(
-                        columnNames = {"FOLLOWER_ID", "FOLLOWING_ID"}
+                        columnNames = {"FROM_USER", "TO_USER"}
                 )
         }
 )
@@ -23,17 +23,17 @@ public class Follows extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FOLLOWER_ID")
-    private Users follower;
+    @JoinColumn(name = "FROM_USER")
+    private Users fromUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FOLLOWING_ID")
-    private Users following;
+    @JoinColumn(name = "TO_USER")
+    private Users toUser;
 
     @Builder
-    public Follows(Long id, Users follower, Users following) {
+    public Follows(Long id, Users fromUser, Users toUser) {
         this.id = id;
-        this.follower = follower;
-        this.following = following;
+        this.fromUser = fromUser;
+        this.toUser = toUser;
     }
 }

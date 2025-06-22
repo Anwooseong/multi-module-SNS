@@ -1,6 +1,5 @@
 package com.social.task;
 
-import com.social.client.CommentClient;
 import com.social.domain.Comments;
 import com.social.domain.Posts;
 import com.social.event.CommentEvent;
