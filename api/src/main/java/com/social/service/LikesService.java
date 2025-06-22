@@ -55,9 +55,6 @@ public class LikesService {
         String kafkaTopic = "like";
         LikeEvent likeEvent = new LikeEvent(type, post.getId(), user.getId(), Instant.now());
         kafkaTemplate.send(kafkaTopic, likeEvent);
-        log.info("Kafka LikeEvent published: {}", likeEvent);
-
-
         return likeId;
     }
 }

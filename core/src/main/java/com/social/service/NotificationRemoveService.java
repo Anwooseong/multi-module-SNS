@@ -13,7 +13,6 @@ public class NotificationRemoveService {
     private final NotificationRepository notificationRepository;
 
     public void deleteById(String id) {
-        log.info("Notification removed: {}", id);
         notificationRepository.deleteById(id);
     }
 }

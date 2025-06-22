@@ -34,7 +34,6 @@ public class CommentAddTask {
                 .orElseThrow(() -> new RuntimeException("Post is null with postId:"+ event.getPostId()));
 
         if (Objects.equals(post.getUser().getId(), event.getUserId())) {
-            log.info("자기 게시글 좋아요 추가는 인한 알림은 등록 X");
             return;
         }
 

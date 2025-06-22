@@ -41,8 +41,6 @@ public class CommentsService {
         String kafkaTopic = "comment";
         CommentEvent commentEvent = new CommentEvent(CommentEventType.ADD, post.getId(), user.getId(), saveComment.getId());
         kafkaTemplate.send(kafkaTopic, commentEvent);
-        log.info("Kafka LikeEvent published: {}", commentEvent);
-
         return saveComment;
     }
 }
