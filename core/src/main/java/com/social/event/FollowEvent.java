@@ -12,6 +12,6 @@ import java.time.Instant;
 public class FollowEvent {
     private FollowEventType type;
     private Long userId;
-    private Long targetUserId;
+    private Long toUserId;
     private Instant createdAt;
 }

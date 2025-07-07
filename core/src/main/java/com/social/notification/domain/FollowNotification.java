@@ -1,14 +1,18 @@
 package com.social.notification.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.TypeAlias;
 
 import java.time.Instant;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @TypeAlias("FollowNotification")
 public class FollowNotification extends Notification {
-    private final Long followerId;
+    private Long toUserId;
 
     public FollowNotification(
             String id,
@@ -18,9 +22,9 @@ public class FollowNotification extends Notification {
             Instant createdAt,
             Instant lastUpdatedAt,
             Instant deletedAt,
-            Long followerId
+            Long toUserId
     ) {
         super(id, userId, type, occurredAt, createdAt, lastUpdatedAt, deletedAt);
-        this.followerId = followerId;
+        this.toUserId = toUserId;
     }
 }

@@ -29,13 +29,13 @@ public class FollowAddTask {
 
         return new FollowNotification(
                 NotificationIdGenerator.generate(),
-                event.getTargetUserId(),
+                event.getUserId(),
                 NotificationType.FOLLOW,
                 event.getCreatedAt(),
                 now,
                 now,
                 retention,
-                event.getUserId()
+                event.getToUserId()
         );
     }
 }

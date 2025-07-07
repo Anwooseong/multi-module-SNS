@@ -25,8 +25,8 @@ public interface NotificationRepository extends MongoRepository<Notification, St
     @Query("{'type': ?0, 'postId': ?1 }")
     Optional<Notification> findByTypeAndPostId(NotificationType type, Long postId);
 
-    @Query("{'type': ?0, 'userId': ?1, 'followerId': ?2 }")
-    Optional<Notification> findByTypeAndUserIdAndFollowerId(NotificationType type, Long userId, Long followerId);
+    @Query("{'type': ?0, 'userId': ?1, 'toUserId': ?2 }")
+    Optional<Notification> findByTypeAndUserIdAndToUserId(NotificationType type, Long userId, Long toUserId);
 
     Slice<Notification> findAllByUserIdOrderByOccurredAtDesc(Long userId, Pageable page);
 

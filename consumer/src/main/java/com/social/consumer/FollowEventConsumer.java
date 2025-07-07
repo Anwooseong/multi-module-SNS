@@ -20,7 +20,7 @@ public class FollowEventConsumer {
     private final FollowRemoveTask followRemoveTask;
 
     @Bean(name = "follow")
-    public Consumer<FollowEvent> follow() {  //application-event.yml 에 등록된 function definition 에 따라서 함수명 설정
+    public Consumer<FollowEvent> like() {  //application-event.yml 에 등록된 function definition 에 따라서 함수명 설정
         return event -> {
             if (event.getType() == FollowEventType.ADD) {
                 followAddTask.processEvent(event);

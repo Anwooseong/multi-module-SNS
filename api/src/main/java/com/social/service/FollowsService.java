@@ -49,4 +49,25 @@ public class FollowsService {
         kafkaTemplate.send(kafkaTopic, followEvent);
         return saveFollow.getId();
     }
+
+    @Transactional
+    public Long deleteFollow(Long toUserId) {
+
+        Users fromUser = usersRepository.findById(getCurrentUserId())
+                .orElseThrow(() -> new RuntimeException("유저 ID가 존재하지 않습니다."));
+
+        Users toUser = usersRepository.findById(toUserId)
+                .orElseThrow(() -> new RuntimeException("유저 ID가 존재하지 않습니다."));
+
+
+        Follows follows = followsRepository.findByFromUserAndToUser(fromUser, toUser)
+                .orElseThrow(() -> new RuntimeException("팔로우되어있지 않은 유저입니다."));
+
+        followsRepository.delete(follows);
+
+        String kafkaTopic = "follow";
+        FollowEvent followEvent = new FollowEvent(FollowEventType.REMOVE, fromUser.getId(), toUser.getId(), Instant.now());
+        kafkaTemplate.send(kafkaTopic, followEvent);
+        return toUser.getId();
+    }
 }

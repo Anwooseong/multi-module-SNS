@@ -15,9 +15,9 @@ public class FollowRemoveTask {
 
     private final NotificationRemoveService removeService;
 
-    public void processEvent(FollowEvent event) {
-        getService.getNotificationByTypeAndUserIdAndFollowerId(NotificationType.FOLLOW, event.getTargetUserId(),
-                        event.getUserId())
+    public void  processEvent(FollowEvent event) {
+        getService.getNotificationByTypeAndUserIdAndToUserId(NotificationType.FOLLOW, event.getUserId(),
+                        event.getToUserId())
                 .ifPresent(
                         notification -> removeService.deleteById(notification.getId())
                 );
