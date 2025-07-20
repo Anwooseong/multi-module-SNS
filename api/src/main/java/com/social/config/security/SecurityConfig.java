@@ -58,7 +58,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/file").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/file").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/user-notifications").permitAll()
+                        .requestMatchers("/api/v1/user-notifications").permitAll()
                         .anyRequest().authenticated()
                 )
 

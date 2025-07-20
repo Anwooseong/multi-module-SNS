@@ -20,6 +20,7 @@ public class NotificationReadController implements NotificationReadControllerSpe
         this.service = service;
     }
 
+    @Override
     @PutMapping("/{userId}/read")
     public ResponseEntity<SetLastReadAtResponse> setLastReadAt(
             @PathVariable(value = "userId") long userId
