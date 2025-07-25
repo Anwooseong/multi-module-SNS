@@ -37,3 +37,4 @@ out/
 .vscode/
 
 /api/src/main/resources/application-secret.yml
+/core/src/main/generated
