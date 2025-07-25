@@ -10,7 +10,7 @@ import java.time.Instant;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/user-notifications")
+@RequestMapping("/api/v1/user-notifications")
 public class UserNotificationListController implements UserNotificationListControllerSpec {
 
     private final GetUserNotificationsService getUserNotificationsService;
