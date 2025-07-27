@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface PostsRepository extends JpaRepository<Posts, Long> {
+public interface PostsRepository extends JpaRepository<Posts, Long>, PostsRepositoryCustom {
 
     @Query("SELECT p FROM Posts p JOIN FETCH p.photos ph WHERE p.id = :postId ORDER BY ph.sortOrder ASC")
     Optional<Posts> findWithPhotosByIdOrderBySortOrderAsc(@Param("postId") Long postId);

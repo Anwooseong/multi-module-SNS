@@ -11,9 +11,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     testImplementation("org.springframework.security:spring-security-test")
 
-//    implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
-//    implementation("javax.xml.bind:jaxb-api:2.3.1")
-
     implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.2"))
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
 

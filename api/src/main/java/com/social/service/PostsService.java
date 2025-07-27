@@ -1,6 +1,7 @@
 package com.social.service;
 
 import com.social.controller.request.CreatePostsRequest;
+import com.social.controller.response.SliceResponse;
 import com.social.domain.Photos;
 import com.social.domain.Posts;
 import com.social.domain.Users;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -47,5 +49,11 @@ public class PostsService {
         photosRepository.saveAll(photosToEntity);
 
         return savePost;
+    }
+
+    @Transactional(readOnly = true)
+    public SliceResponse<?> getFeed(Pageable pageable) {
+
+        return null;
     }
 }

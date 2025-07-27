@@ -11,11 +11,11 @@ import com.social.service.PostsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -34,23 +34,23 @@ public abstract class ControllerTestSupport {
     @Autowired
     protected ObjectMapper objectMapper;
 
-    @MockitoBean
+    @MockBean
     protected AuthService authService;
 
-    @MockitoBean
+    @MockBean
     protected UsersRepository usersRepository;
 
-    @MockitoBean
+    @MockBean
     protected PostsService postsService;
 
-    @MockitoBean
+    @MockBean
     protected PostsRepository postsRepository;
 
-    @MockitoBean
+    @MockBean
     protected PhotosRepository photosRepository;
 
 
-    @MockitoBean
+    @MockBean
     protected PasswordEncoder passwordEncoder;
 
 
