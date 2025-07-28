@@ -8,11 +8,12 @@ import com.social.domain.Users;
 import com.social.repository.PhotosRepository;
 import com.social.repository.PostsRepository;
 import com.social.repository.UsersRepository;
+import com.social.repository.querydslDTO.GetPostsDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -52,8 +53,9 @@ public class PostsService {
     }
 
     @Transactional(readOnly = true)
-    public SliceResponse<?> getFeed(Pageable pageable) {
-
-        return null;
+    public SliceResponse<GetPostsDTO> getFeed(Long userId, Pageable pageable) {
+        Users user = usersRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("유저 ID가 존재하지 않습니다."));
+        return SliceResponse.of(postsRepository.findPostsSummaries(user.getId(), pageable));
     }
 }
