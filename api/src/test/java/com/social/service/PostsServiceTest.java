@@ -2,6 +2,7 @@ package com.social.service;
 
 import com.social.IntegrationTestSupport;
 import com.social.controller.request.CreatePostsRequest;
+import com.social.controller.request.UpdatePostsRequest;
 import com.social.controller.response.SliceResponse;
 import com.social.domain.Photos;
 import com.social.domain.Posts;
@@ -10,6 +11,7 @@ import com.social.repository.*;
 import com.social.repository.querydslDTO.GetPostsDTO;
 import com.social.util.*;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -180,6 +182,45 @@ class PostsServiceTest extends IntegrationTestSupport {
         Assertions.assertThat(result.getPageSize()).isEqualTo(pageSize);
         Assertions.assertThat(result.isHasNext()).isFalse();
         Assertions.assertThat(result.getData().size()).isEqualTo(2);
+    }
+
+    @DisplayName("게시글 수정 테스트")
+    @Test
+    void updatePost() {
+        // given
+        Users user1 = usersRepository.save(UserFixture.user("user1"));
+        Users user2 = usersRepository.save(UserFixture.user("user2"));
+
+        Posts post1 = postsRepository.save(PostFixture.post(user1, "test1"));
+        Posts post2 = postsRepository.save(PostFixture.post(user2, "test2"));
+        Posts post3 = postsRepository.save(PostFixture.post(user1, "test3"));
+        Posts post4 = postsRepository.save(PostFixture.post(user2, "test4"));
+        Posts post5 = postsRepository.save(PostFixture.post(user2, "test5"));
+
+        photosRepository.save(PhotoFixture.photo(post1, "url1", 1));
+        photosRepository.save(PhotoFixture.photo(post1, "url2", 2));
+        photosRepository.save(PhotoFixture.photo(post2, "url3", 1));
+        photosRepository.save(PhotoFixture.photo(post2, "url4", 2));
+        photosRepository.save(PhotoFixture.photo(post3, "url5", 1));
+        photosRepository.save(PhotoFixture.photo(post3, "url6", 2));
+        photosRepository.save(PhotoFixture.photo(post4, "url7", 1));
+        photosRepository.save(PhotoFixture.photo(post5, "url8", 1));
+
+        // when
+        UpdatePostsRequest request = UpdatePostsRequest.builder()
+                .caption("updatePostCaption")
+                .imageUrls(List.of("updatePhoto1.jpg", "updatePhoto2.jpg"))
+                .build();
+        Posts posts = postsService.updatePost(user1.getId(), post1.getId(), request);
+
+        // then
+        Assertions.assertThat(posts.getCaption()).isEqualTo("updatePostCaption");
+        Assertions.assertThat(posts.getPhotos())
+                .extracting(Photos::getImageUrl, Photos::getSortOrder)
+                .containsExactly(
+                        Tuple.tuple("updatePhoto1.jpg", 0),
+                        Tuple.tuple("updatePhoto2.jpg", 1)
+                );
     }
 
 }
