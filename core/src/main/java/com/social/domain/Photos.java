@@ -1,10 +1,7 @@
 package com.social.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
@@ -27,5 +24,9 @@ public class Photos extends BaseTimeEntity{
         this.post = post;
         this.imageUrl = imageUrl;
         this.sortOrder = sortOrder;
+    }
+
+    public void initPost(Posts posts) {
+        this.post = posts;
     }
 }

@@ -1,6 +1,7 @@
 package com.social.service;
 
 import com.social.controller.request.CreatePostsRequest;
+import com.social.controller.request.UpdatePostsRequest;
 import com.social.controller.response.SliceResponse;
 import com.social.domain.Photos;
 import com.social.domain.Posts;
@@ -57,5 +58,16 @@ public class PostsService {
         Users user = usersRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저 ID가 존재하지 않습니다."));
         return SliceResponse.of(postsRepository.findPostsSummaries(user.getId(), pageable));
+    }
+
+    @Transactional
+    public Posts updatePost(Long userId, Long postId, UpdatePostsRequest request) {
+        Users user = usersRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("유저 ID가 존재하지 않습니다."));
+
+        Posts posts = postsRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("선택한 게시글은 존재하지 않습니다."));
+
+        return posts.update(request.toPostsEntity(user), request.getImageUrls());
     }
 }
