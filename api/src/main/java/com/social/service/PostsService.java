@@ -65,7 +65,7 @@ public class PostsService {
         Users user = usersRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저 ID가 존재하지 않습니다."));
 
-        Posts posts = postsRepository.findById(postId)
+        Posts posts = postsRepository.findByIdAndUser(postId, user)
                 .orElseThrow(() -> new RuntimeException("선택한 게시글은 존재하지 않습니다."));
 
         return posts.update(request.toPostsEntity(user), request.getImageUrls());

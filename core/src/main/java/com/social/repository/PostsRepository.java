@@ -1,6 +1,7 @@
 package com.social.repository;
 
 import com.social.domain.Posts;
+import com.social.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +15,6 @@ public interface PostsRepository extends JpaRepository<Posts, Long>, PostsReposi
 
     @Query("SELECT p FROM Posts p JOIN FETCH p.user")
     Optional<Posts> findWithUserById(Long id);
+
+    Optional<Posts> findByIdAndUser(Long id, Users user);
 }
