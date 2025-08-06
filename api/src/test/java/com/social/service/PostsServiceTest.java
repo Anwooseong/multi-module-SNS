@@ -54,12 +54,14 @@ class PostsServiceTest extends IntegrationTestSupport {
 
     @AfterEach
     void tearDown() {
+        System.out.println("-------------tearDown Start----------------");
         photosRepository.deleteAllInBatch();
         commentsRepository.deleteAllInBatch();
         likesRepository.deleteAllInBatch();
         postsRepository.deleteAllInBatch();
         usersRepository.deleteAllInBatch();
         mockSecurityUtil.close();
+        System.out.println("-------------tearDown Finish----------------");
     }
 
     @DisplayName("게시글 등록 성공")
@@ -221,6 +223,45 @@ class PostsServiceTest extends IntegrationTestSupport {
                         Tuple.tuple("updatePhoto1.jpg", 0),
                         Tuple.tuple("updatePhoto2.jpg", 1)
                 );
+    }
+
+    @DisplayName("게시글 삭제 테스트")
+    @Test
+    void deletePost() {
+        // given
+        Users user1 = usersRepository.save(UserFixture.user("user1"));
+        Users user2 = usersRepository.save(UserFixture.user("user2"));
+
+        Posts post1 = postsRepository.save(PostFixture.post(user1, "test1"));
+        Posts post2 = postsRepository.save(PostFixture.post(user2, "test2"));
+        Posts post3 = postsRepository.save(PostFixture.post(user1, "test3"));
+        Posts post4 = postsRepository.save(PostFixture.post(user2, "test4"));
+        Posts post5 = postsRepository.save(PostFixture.post(user2, "test5"));
+
+        commentsRepository.save(CommentFixture.comment(user1, post1, "댓글1"));
+        commentsRepository.save(CommentFixture.comment(user1, post1, "댓글2"));
+        commentsRepository.save(CommentFixture.comment(user2, post1, "댓글2"));
+
+        likesRepository.save(LikeFixture.like(user1, post1));
+        likesRepository.save(LikeFixture.like(user2, post1));
+        likesRepository.save(LikeFixture.like(user1, post2));
+        likesRepository.save(LikeFixture.like(user2, post4));
+
+        photosRepository.save(PhotoFixture.photo(post1, "url1", 1));
+        photosRepository.save(PhotoFixture.photo(post1, "url2", 2));
+        photosRepository.save(PhotoFixture.photo(post2, "url3", 1));
+        photosRepository.save(PhotoFixture.photo(post2, "url4", 2));
+        photosRepository.save(PhotoFixture.photo(post3, "url5", 1));
+        photosRepository.save(PhotoFixture.photo(post3, "url6", 2));
+        photosRepository.save(PhotoFixture.photo(post4, "url7", 1));
+        photosRepository.save(PhotoFixture.photo(post5, "url8", 1));
+
+
+        // when
+        Long result = postsService.deletePost(user1.getId(), post1.getId());
+
+        // then
+        Assertions.assertThat(result).isEqualTo(post1.getId());
     }
 
 }
