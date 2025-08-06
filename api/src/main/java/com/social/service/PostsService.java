@@ -6,9 +6,7 @@ import com.social.controller.response.SliceResponse;
 import com.social.domain.Photos;
 import com.social.domain.Posts;
 import com.social.domain.Users;
-import com.social.repository.PhotosRepository;
-import com.social.repository.PostsRepository;
-import com.social.repository.UsersRepository;
+import com.social.repository.*;
 import com.social.repository.querydslDTO.GetPostsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +25,8 @@ public class PostsService {
     private final UsersRepository usersRepository;
     private final PostsRepository postsRepository;
     private final PhotosRepository photosRepository;
+    private final LikesRepository likesRepository;
+    private final CommentsRepository commentsRepository;
 
     @Transactional
     public Posts createPost(CreatePostsRequest request) {
@@ -69,5 +69,16 @@ public class PostsService {
                 .orElseThrow(() -> new RuntimeException("선택한 게시글은 존재하지 않습니다."));
 
         return posts.update(request.toPostsEntity(user), request.getImageUrls());
+    }
+
+    @Transactional
+    public Long deletePost(Long userId, Long postId) {
+        Users user = usersRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("유저 ID가 존재하지 않습니다."));
+
+        photosRepository.deleteAllByPostId(postId);
+        commentsRepository.deleteAllByPostId(postId);
+        likesRepository.deleteAllByPostId(postId);
+        return postsRepository.deleteByIdAndUser(postId, user);
     }
 }

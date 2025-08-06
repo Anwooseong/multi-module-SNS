@@ -11,4 +11,6 @@ public interface CommentsRepository extends JpaRepository<Comments, Long> {
 
     @Query("SELECT c FROM Comments c JOIN FETCH c.user AND JOIN FETCH c.post WHERE c.id = :id")
     Optional<Comments> findWithUserAndPostById(@Param("id") Long id);
+
+    void deleteAllByPostId(Long postId);
 }

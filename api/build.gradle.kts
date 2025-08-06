@@ -17,4 +17,6 @@ dependencies {
 
     implementation("org.springframework.kafka:spring-kafka")
 
+    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
+
 }

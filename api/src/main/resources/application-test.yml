@@ -13,6 +13,15 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
+logging:
+  level:
+    p6spy: debug
 
 server:
   port: 8080
