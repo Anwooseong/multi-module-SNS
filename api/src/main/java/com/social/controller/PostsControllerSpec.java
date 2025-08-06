@@ -3,6 +3,7 @@ package com.social.controller;
 import com.social.controller.request.CreatePostsRequest;
 import com.social.controller.request.UpdatePostsRequest;
 import com.social.controller.response.CreatePostsResponse;
+import com.social.controller.response.DeletePostResponse;
 import com.social.controller.response.SliceResponse;
 import com.social.controller.response.UpdatePostsResponse;
 import com.social.repository.querydslDTO.GetPostsDTO;
@@ -27,6 +28,11 @@ public interface PostsControllerSpec {
     ResponseEntity<UpdatePostsResponse> updateBoard(
             @Parameter(example = "1") Long postId,
             UpdatePostsRequest updatePostsRequest
+    );
+
+    @Operation(summary = "게시글 삭제")
+    ResponseEntity<DeletePostResponse> deleteBoard(
+            @Parameter(example = "1") Long postId
     );
 
 }
