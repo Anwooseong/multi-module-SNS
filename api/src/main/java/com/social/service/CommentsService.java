@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import static com.social.util.SecurityUtil.getCurrentUserId;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -26,11 +24,10 @@ public class CommentsService {
     private final PostsRepository postsRepository;
     private final KafkaTemplate<String, CommentEvent> kafkaTemplate;
 
-    public Comments createComment(CreateCommentsRequest request) {
-        Users user = usersRepository.findById(getCurrentUserId())
+    public Comments createComment(Long userId, Long postId, CreateCommentsRequest request) {
+        Users user = usersRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저 ID가 존재하지 않습니다."));
 
-        Long postId = request.getPostId();
         Posts post = postsRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("게시글 ID가 존재하지 않습니다."));
 
