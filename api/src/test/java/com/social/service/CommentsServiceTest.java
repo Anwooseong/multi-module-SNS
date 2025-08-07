@@ -1,7 +1,7 @@
 package com.social.service;
 
 import com.social.IntegrationTestSupport;
-import com.social.controller.request.CreateCommentsRequest;
+import com.social.controller.request.CommentRequest;
 import com.social.domain.Comments;
 import com.social.domain.Posts;
 import com.social.domain.Users;
@@ -9,6 +9,7 @@ import com.social.event.CommentEvent;
 import com.social.repository.CommentsRepository;
 import com.social.repository.PostsRepository;
 import com.social.repository.UsersRepository;
+import com.social.util.CommentFixture;
 import com.social.util.PostFixture;
 import com.social.util.UserFixture;
 import org.assertj.core.api.Assertions;
@@ -58,12 +59,38 @@ class CommentsServiceTest extends IntegrationTestSupport {
         Posts post1 = postsRepository.save(PostFixture.post(user1, "test1"));
         Posts post2 = postsRepository.save(PostFixture.post(user2, "test2"));
 
-        CreateCommentsRequest request = CreateCommentsRequest.builder()
+        CommentRequest request = CommentRequest.builder()
                 .content("testCaption")
                 .build();
 
         // when
         Comments comment = commentsService.createComment(user1.getId(), post1.getId(), request);
+
+        // then
+        Assertions.assertThat(comment.getContent()).isEqualTo("testCaption");
+        Assertions.assertThat(comment.getPost().getId()).isEqualTo(post1.getId());
+        verify(kafkaTemplate).send(any(String.class), any(CommentEvent.class));
+    }
+
+    @DisplayName("게시글 수정 테스트")
+    @Test
+    void modifyComment() {
+        // given
+        Users user1 = usersRepository.save(UserFixture.user("user1"));
+        Users user2 = usersRepository.save(UserFixture.user("user2"));
+
+        Posts post1 = postsRepository.save(PostFixture.post(user1, "test1"));
+        Posts post2 = postsRepository.save(PostFixture.post(user2, "test2"));
+
+        Comments comment1 = commentsRepository.save(CommentFixture.comment(user1, post1, "댓글1"));
+        Comments comment2 = commentsRepository.save(CommentFixture.comment(user1, post1, "댓글2"));
+
+        CommentRequest request = CommentRequest.builder()
+                .content("testCaption")
+                .build();
+
+        // when
+        Comments comment = commentsService.modifyComment(user1.getId(), post1.getId(), comment1.getId(), request);
 
         // then
         Assertions.assertThat(comment.getContent()).isEqualTo("testCaption");
