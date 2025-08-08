@@ -56,4 +56,12 @@ public class CommentsService {
 
         return comment;
     }
+
+    @Transactional
+    public Comments deleteComment(Long userId, Long postId, Long commentId) {
+        Comments comment = commentsRepository.findByIdAndUserIdAndPostId(commentId, userId, postId)
+                .orElseThrow(() -> new RuntimeException("조건에 맞는 댓글이 존재하지 않습니다."));
+        commentsRepository.delete(comment);
+        return comment;
+    }
 }
