@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.core.KafkaTemplate;
 
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
@@ -72,7 +74,7 @@ class CommentsServiceTest extends IntegrationTestSupport {
         verify(kafkaTemplate).send(any(String.class), any(CommentEvent.class));
     }
 
-    @DisplayName("게시글 수정 테스트")
+    @DisplayName("게시글 댓글 수정 테스트")
     @Test
     void modifyComment() {
         // given
@@ -97,4 +99,47 @@ class CommentsServiceTest extends IntegrationTestSupport {
         Assertions.assertThat(comment.getPost().getId()).isEqualTo(post1.getId());
         verify(kafkaTemplate).send(any(String.class), any(CommentEvent.class));
     }
+
+    @DisplayName("게시글 댓글 삭제 테스트")
+    @Test
+    void deleteComment_success() {
+        // given
+        Users user1 = usersRepository.save(UserFixture.user("user1"));
+        Users user2 = usersRepository.save(UserFixture.user("user2"));
+
+        Posts post1 = postsRepository.save(PostFixture.post(user1, "test1"));
+        Posts post2 = postsRepository.save(PostFixture.post(user2, "test2"));
+
+        Comments comment1 = commentsRepository.save(CommentFixture.comment(user1, post1, "댓글1"));
+        Comments comment2 = commentsRepository.save(CommentFixture.comment(user1, post1, "댓글2"));
+
+        // when
+        commentsService.deleteComment(user1.getId(), post1.getId(), comment1.getId());
+        Optional<Comments> deletedComment = commentsRepository.findById(comment1.getId());
+
+        // then
+        Assertions.assertThat(deletedComment).isEmpty();
+    }
+
+    @DisplayName("게시글 댓글 작성자가 아닐 때 삭제 실패 테스트")
+    @Test
+    void deleteComment_failed_notFound() {
+        // given
+        Users user1 = usersRepository.save(UserFixture.user("user1"));
+        Users user2 = usersRepository.save(UserFixture.user("user2"));
+        Users user3 = usersRepository.save(UserFixture.user("user3"));
+
+        Posts post1 = postsRepository.save(PostFixture.post(user1, "test1"));
+        Posts post2 = postsRepository.save(PostFixture.post(user2, "test2"));
+
+        Comments comment1 = commentsRepository.save(CommentFixture.comment(user1, post1, "댓글1"));
+        Comments comment2 = commentsRepository.save(CommentFixture.comment(user1, post1, "댓글2"));
+
+        // when
+        // then
+        Assertions.assertThatThrownBy(() -> commentsService.deleteComment(user3.getId(), post1.getId(), comment1.getId()))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("조건에 맞는 댓글이 존재하지 않습니다.");
+    }
+
 }
