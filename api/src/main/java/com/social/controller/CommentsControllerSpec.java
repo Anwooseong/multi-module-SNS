@@ -2,6 +2,7 @@ package com.social.controller;
 
 import com.social.controller.request.CommentRequest;
 import com.social.controller.response.CreateCommentsResponse;
+import com.social.controller.response.DeleteCommentResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,5 +22,11 @@ public interface CommentsControllerSpec {
             @Parameter(example = "1") Long postId,
             @Parameter(example = "1") Long commentId,
             CommentRequest commentRequest
+    );
+
+    @Operation(summary = "댓글 삭제")
+    ResponseEntity<DeleteCommentResponse> deleteComment(
+            @Parameter(example = "1") Long postId,
+            @Parameter(example = "1") Long commentId
     );
 }
