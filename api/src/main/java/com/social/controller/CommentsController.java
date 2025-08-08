@@ -2,6 +2,7 @@ package com.social.controller;
 
 import com.social.controller.request.CommentRequest;
 import com.social.controller.response.CreateCommentsResponse;
+import com.social.controller.response.DeleteCommentResponse;
 import com.social.service.CommentsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,11 @@ public class CommentsController implements CommentsControllerSpec {
         return ResponseEntity.ok(
                 CreateCommentsResponse.of(commentsService.modifyComment(getCurrentUserId(), postId, commentId, commentRequest))
         );
+    }
+
+    @Override
+    @DeleteMapping("/{postId}/comments/{commentId}")
+    public ResponseEntity<DeleteCommentResponse> deleteComment(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId) {
+        return ResponseEntity.ok(DeleteCommentResponse.of(commentsService.deleteComment(getCurrentUserId(), postId, commentId)));
     }
 }
