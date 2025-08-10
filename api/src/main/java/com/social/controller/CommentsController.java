@@ -3,9 +3,13 @@ package com.social.controller;
 import com.social.controller.request.CommentRequest;
 import com.social.controller.response.CreateCommentsResponse;
 import com.social.controller.response.DeleteCommentResponse;
+import com.social.controller.response.SliceResponse;
+import com.social.repository.querydslDTO.GetCommentDTO;
 import com.social.service.CommentsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +32,17 @@ public class CommentsController implements CommentsControllerSpec {
                 CreateCommentsResponse.of(commentsService.createComment(getCurrentUserId(), postId, commentRequest))
         );
     }
+
+    @GetMapping("/{postId}/comments")
+    public ResponseEntity<SliceResponse<GetCommentDTO>> getComments(
+            @PathVariable("postId") Long postId,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(commentsService.getComments(postId, pageable));
+    }
+
 
     @PatchMapping("/{postId}/comments/{commentId}")
     public ResponseEntity<CreateCommentsResponse> modifyComment(
