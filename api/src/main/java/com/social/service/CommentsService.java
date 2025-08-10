@@ -1,6 +1,7 @@
 package com.social.service;
 
 import com.social.controller.request.CommentRequest;
+import com.social.controller.response.SliceResponse;
 import com.social.domain.Comments;
 import com.social.domain.Posts;
 import com.social.domain.Users;
@@ -9,8 +10,11 @@ import com.social.event.CommentEventType;
 import com.social.repository.CommentsRepository;
 import com.social.repository.PostsRepository;
 import com.social.repository.UsersRepository;
+import com.social.repository.querydslDTO.GetCommentDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,5 +67,12 @@ public class CommentsService {
                 .orElseThrow(() -> new RuntimeException("조건에 맞는 댓글이 존재하지 않습니다."));
         commentsRepository.delete(comment);
         return comment;
+    }
+
+    @Transactional(readOnly = true)
+    public SliceResponse<GetCommentDTO> getComments(Long postId, Pageable pageable) {
+        Slice<GetCommentDTO> commentsSlice = commentsRepository.findSliceByPostId(postId, pageable)
+                .map(GetCommentDTO::new);
+        return SliceResponse.of(commentsSlice);
     }
 }
