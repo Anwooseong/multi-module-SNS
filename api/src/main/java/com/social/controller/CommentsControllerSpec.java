@@ -3,8 +3,11 @@ package com.social.controller;
 import com.social.controller.request.CommentRequest;
 import com.social.controller.response.CreateCommentsResponse;
 import com.social.controller.response.DeleteCommentResponse;
+import com.social.controller.response.SliceResponse;
+import com.social.repository.querydslDTO.GetCommentDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
@@ -15,6 +18,13 @@ public interface CommentsControllerSpec {
     ResponseEntity<CreateCommentsResponse> createComment(
             @Parameter(example = "1") Long poseId,
             CommentRequest commentRequest
+    );
+
+    @Operation(summary = "댓글 조회")
+    ResponseEntity<SliceResponse<GetCommentDTO>> getComments(
+            @Parameter(example = "1", in = ParameterIn.PATH) Long postId,
+            @Parameter(example = "0") int page,
+            @Parameter(example = "5") int size
     );
 
     @Operation(summary = "댓글 수정")

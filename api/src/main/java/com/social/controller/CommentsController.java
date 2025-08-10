@@ -33,6 +33,7 @@ public class CommentsController implements CommentsControllerSpec {
         );
     }
 
+    @Override
     @GetMapping("/{postId}/comments")
     public ResponseEntity<SliceResponse<GetCommentDTO>> getComments(
             @PathVariable("postId") Long postId,
@@ -43,7 +44,7 @@ public class CommentsController implements CommentsControllerSpec {
         return ResponseEntity.ok(commentsService.getComments(postId, pageable));
     }
 
-
+    @Override
     @PatchMapping("/{postId}/comments/{commentId}")
     public ResponseEntity<CreateCommentsResponse> modifyComment(
             @PathVariable("postId") Long postId,
