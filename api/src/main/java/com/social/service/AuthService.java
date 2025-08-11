@@ -12,6 +12,7 @@ import com.social.jwt.TokenProvider;
 import com.social.repository.RefreshTokenRepository;
 import com.social.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -67,10 +69,12 @@ public class AuthService {
         Authentication authentication = tokenProvider.getAuthentication(tokenRequest.getAccessToken());
 
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
+        log.info("유저 ID : {}", authentication.getName());
         RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
                 .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
 
         // 4. Refresh Token 일치하는지 검사
+        log.info("refreshToken.getValue() : {}, tokenRequest.getRefreshToken() : {}", refreshToken.getValue(), tokenRequest.getRefreshToken());
         if (!refreshToken.getValue().equals(tokenRequest.getRefreshToken())) {
             throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
         }

@@ -78,16 +78,6 @@ class PostsRepositoryCustomTest {
         // when
         Slice<GetPostsDTO> result = postsRepositoryCustomImpl.findPostsSummaries(user1.getId(), pageable);
         System.out.println("총 개수: " + result.getContent().size());
-        result.getContent().forEach(dto -> {
-            System.out.println("------------");
-            System.out.println("postId: " + dto.getPostId());
-            System.out.println("caption: " + dto.getCaption());
-            System.out.println("liked: " + dto.getLiked());
-            System.out.println("commentCnt: " + dto.getCommentCnt());
-            System.out.println("createAt: " + dto.getCreateAt());
-            System.out.println("thumbnailUrl: " + dto.getThumbnailUrl());
-        });
-
 
         // then
         Assertions.assertThat(result.getContent()).hasSize(2);
@@ -169,17 +159,6 @@ class PostsRepositoryCustomTest {
 
         // when
         Slice<GetPostsDTO> result = postsRepositoryCustomImpl.findPostsSummaries(user1.getId(), pageable);
-        System.out.println("총 개수: " + result.getContent().size());
-        result.getContent().forEach(dto -> {
-            System.out.println("------------");
-            System.out.println("postId: " + dto.getPostId());
-            System.out.println("caption: " + dto.getCaption());
-            System.out.println("liked: " + dto.getLiked());
-            System.out.println("commentCnt: " + dto.getCommentCnt());
-            System.out.println("createAt: " + dto.getCreateAt());
-            System.out.println("thumbnailUrl: " + dto.getThumbnailUrl());
-        });
-
 
         // then
         Assertions.assertThat(result.getContent().get(0).getPostId()).isEqualTo(post3.getId());
